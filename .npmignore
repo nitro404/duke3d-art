@@ -1,0 +1,11 @@
+node_modules
+bower_components
+src
+test
+coverage
+.sass-cache
+.coveralls.yml
+.travis.yml
+package-lock.json
+yarn.lock
+gulpfile.js
