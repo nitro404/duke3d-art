@@ -1,15 +1,19 @@
 sudo: false
 
+branches:
+  only:
+    - master
+
 language: node_js
 
 node_js:
+  - "12"
   - "10"
   - "8"
-  - "6"
 
 before_install:
   - npm cache clean --force
-  - npm install -g mocha coveralls
+  - npm install -g mocha nyc coveralls
 
 after_success:
   - npm run coveralls

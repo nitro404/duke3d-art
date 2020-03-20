@@ -2,6 +2,7 @@ node_modules
 bower_components
 coverage
 test/temp
+.nyc_output
 .sass-cache
 .coveralls.yml
 yarn.lock

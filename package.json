@@ -7,9 +7,8 @@
     "build": "gulp build",
     "lint": "gulp lint",
     "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha --require test/*.js",
-    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "security": "gulp security"
+    "coverage": "nyc npm run test",
+    "coveralls": "npm run coverage && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -32,7 +31,7 @@
   "author": {
     "name": "Kevin Scroggins"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nitro404/duke3d-art/issues"
   },
@@ -51,6 +50,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "gulp-fabricator": "^1.0.7"
+    "gulp-fabricator": "^1.2.0"
   }
 }

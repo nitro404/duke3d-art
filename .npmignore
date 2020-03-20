@@ -1,11 +1,14 @@
 node_modules
 bower_components
-src
 test
 coverage
+.nyc_output
 .sass-cache
 .coveralls.yml
 .travis.yml
 package-lock.json
 yarn.lock
 gulpfile.js
+LICENSE
+README.md
+CHANGELOG.md

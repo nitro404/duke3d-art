@@ -1,4 +1,4 @@
-var fabricator = require("gulp-fabricator");
+const fabricator = require("gulp-fabricator");
 
 fabricator.setup({
 	name: "Duke3d Art",
