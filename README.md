@@ -12,6 +12,10 @@
 
 A module for reading Duke Nukem 3D Tiles.ART files.
 
+## Note
+
+This is a preview version of this module, it is not yet complete but should be fully functional if dependencies are manually resolved.
+
 ## Usage
 
 ```javascript
