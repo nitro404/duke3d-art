@@ -13,6 +13,7 @@ const jsonFormat = require("json-format");
 const ByteBuffer = require("bytebuffer");
 const Colour = require("colour-rgba");
 const Palette = require("duke3d-palette");
+const Tile = require("./tile.js");
 
 class ArtProperties {
 	constructor() {
@@ -52,7 +53,7 @@ class ArtProperties {
 }
 
 class Art {
-	constructor(tileCount, localTileStart, localTileEnd, tiles, filePath) {
+	constructor(legacyTileCount, localTileStart, localTileEnd, tiles, filePath) {
 		let self = this;
 
 		let _properties = {
@@ -98,10 +99,10 @@ class Art {
 		});
 
 		// note: this field is no longer used and is inaccurate
-		Object.defineProperty(self, "tileCount", {
+		Object.defineProperty(self, "legacyTileCount", {
 			enumerable: true,
 			get() {
-				return _properties.tileCount;
+				return _properties.legacyTileCount;
 			},
 			set(value) {
 				const newValue = utilities.parseInteger(value);
@@ -110,7 +111,7 @@ class Art {
 					throw new TypeError("Invalid tile count value: " + value + ", expected positive integer.");
 				}
 
-				_properties.tileCount = newValue;
+				_properties.legacyTileCount = newValue;
 			}
 		});
 
@@ -150,7 +151,7 @@ class Art {
 			}
 		});
 
-		self.tileCount = tileCount;
+		self.legacyTileCount = legacyTileCount;
 		self.localTileStart = localTileStart;
 		self.localTileEnd = localTileEnd;
 		self.tiles = tiles;
@@ -309,7 +310,7 @@ class Art {
 
 		let metadata = {
 			number: self.number,
-			count: self.tileCount,
+			count: self.legacyTileCount,
 			start: self.localTileStart,
 			end: self.localTileEnd,
 			tiles: []
@@ -568,7 +569,7 @@ class Art {
 		artByteBuffer.order(true);
 
 		artByteBuffer.writeInt32(Art.Version);
-		artByteBuffer.writeInt32(self.tileCount)
+		artByteBuffer.writeInt32(self.legacyTileCount)
 		artByteBuffer.writeInt32(self.localTileStart)
 		artByteBuffer.writeInt32(self.localTileEnd);
 
@@ -619,10 +620,10 @@ class Art {
 			throw new Error("Unsupported ART file version: " + newValue + ", only version " + Art.Version + " is supported.");
 		}
 
-		const tileCount = artByteBuffer.readInt32();
+		const legacyTileCount = artByteBuffer.readInt32();
 
-		if(!Number.isInteger(tileCount) || tileCount < 0) {
-			throw new Error("Invalid tile count value: " + tileCount + ", expected positive integer.");
+		if(!Number.isInteger(legacyTileCount) || legacyTileCount < 0) {
+			throw new Error("Invalid tile count value: " + legacyTileCount + ", expected positive integer.");
 		}
 
 		const localTileStart = artByteBuffer.readInt32();
@@ -690,7 +691,7 @@ class Art {
 			}
 		}
 
-		return new Art(tileCount, localTileStart, localTileEnd, tiles);
+		return new Art(legacyTileCount, localTileStart, localTileEnd, tiles);
 	}
 
 	static readFrom(filePath) {
@@ -938,6 +939,11 @@ Object.defineProperty(Art, "Colour", {
 
 Object.defineProperty(Art, "Palette", {
 	value: Palette,
+	enumerable: true
+});
+
+Object.defineProperty(Art, "Tile", {
+	value: Tile,
 	enumerable: true
 });
 

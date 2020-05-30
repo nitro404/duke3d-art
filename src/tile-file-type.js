@@ -4,15 +4,6 @@ const utilities = require("extra-utilities");
 const Jimp = require("jimp");
 const Tile = require("./tile.js");
 
-// TODO: temp:
-utilities.stringEqualsIgnoreCase = function stringEqualsIgnoreCase(valueA, valueB) {
-	if(typeof valueA !== "string" || typeof valueB !== "string") {
-		return false;
-	}
-
-	return valueA.localeCompare(valueB, undefined, { sensitivity: "accent" }) === 0;
-};
-
 class TileFileTypeProperties {
 	constructor() {
 		let self = this;
@@ -131,9 +122,9 @@ class TileFileType {
 				const id = utilities.parseInteger(formattedValue);
 
 				if(fileType.id === id ||
-				   utilities.stringEqualsIgnoreCase(fileType.name, formattedValue) ||
-				   utilities.stringEqualsIgnoreCase(fileType.extension, formattedValue) ||
-				   utilities.stringEqualsIgnoreCase(fileType.mimeType, formattedValue)) {
+				   utilities.equalsIgnoreCase(fileType.name, formattedValue) ||
+				   utilities.equalsIgnoreCase(fileType.extension, formattedValue) ||
+				   utilities.equalsIgnoreCase(fileType.mimeType, formattedValue)) {
 					return fileType;
 				}
 			}
@@ -160,8 +151,8 @@ class TileFileType {
 			return false;
 		}
 
-		return utilities.stringEqualsIgnoreCase(self.name, value.name) &&
-			   utilities.stringEqualsIgnoreCase(self.extension, value.extension);
+		return utilities.equalsIgnoreCase(self.name, value.name) &&
+			   utilities.equalsIgnoreCase(self.extension, value.extension);
 	}
 
 	toString() {
