@@ -1,8 +1,5 @@
 "use strict";
 
-// TODO: temp
-const Palette = require("../../Duke3D Palette/index.js");
-
 const async = require("async");
 const path = require("path-extra");
 const fs = require("fs-extra");
@@ -10,6 +7,7 @@ const utilities = require("extra-utilities");
 const ByteBuffer = require("bytebuffer");
 const Jimp = require("jimp");
 const Colour = require("colour-rgba");
+const Palette = require("duke3d-palette");
 const Art = require("./art.js");
 
 class Tile {

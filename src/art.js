@@ -1,7 +1,6 @@
 "use strict";
 
 // TODO: temp
-const Palette = require("../../Duke3D Palette/index.js");
 // http://www.shikadi.net/moddingwiki/Duke_Nukem_3D
 // http://www.shikadi.net/moddingwiki/ART_Format_(Build)
 // https://fabiensanglard.net/duke3d/BUILDINF.TXT
@@ -13,6 +12,7 @@ const utilities = require("extra-utilities");
 const jsonFormat = require("json-format");
 const ByteBuffer = require("bytebuffer");
 const Colour = require("colour-rgba");
+const Palette = require("duke3d-palette");
 
 class ArtProperties {
 	constructor() {
