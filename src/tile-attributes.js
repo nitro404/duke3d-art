@@ -143,14 +143,15 @@ class TileAttributes {
 		return tileAttributeString;
 	}
 
+	clone() {
+		const self = this;
+
+		return new TileAttributes(self.xOffset, self.yOffset, self.numberOfFrames, self.animationType, self.animationSpeed, self.extra);
+	}
+
 	static isTileAttributes(value) {
 		return value instanceof TileAttributes;
 	}
 }
-
-Object.defineProperty(Tile, "Attributes", {
-	value: TileAttributes,
-	enumerable: true
-});
 
 module.exports = TileAttributes;

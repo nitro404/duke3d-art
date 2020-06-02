@@ -9,6 +9,7 @@ const Jimp = require("jimp");
 const Colour = require("colour-rgba");
 const Palette = require("duke3d-palette");
 const Art = require("./art.js");
+const TileAttributes = require("./tile-attributes");
 
 class Tile {
 	constructor(number, width, height, data, attributes, xOffset, yOffset, numberOfFrames, animationType, animationSpeed, extra) {
@@ -74,7 +75,7 @@ class Tile {
 					_properties.data = Buffer.from(data);
 				}
 				else {
-					_properties.data = Buffer.alloc();
+					_properties.data = Buffer.alloc(0);
 				}
 
 				self.validateData();
@@ -88,7 +89,7 @@ class Tile {
 			},
 			set(value) {
 				if(Tile.Attributes.isTileAttributes(attributes)) {
-					_properties.attributes = attributes;
+					_properties.attributes = attributes.clone();
 				}
 				else if(Number.isInteger(attributes)) {
 					_properties.attributes = Tile.Attributes.unpack(attributes);
@@ -156,6 +157,7 @@ class Tile {
 			for(let x = 0; x < self.width; x++) {
 				const pixelValue = self.data[(x * self.height) + y];
 
+// TODO: what if colour data array is pulled locally, probably quicker?
 				image.setPixelColour(
 					pixelValue === 255
 						? Colour.Transparent.pack()
@@ -170,6 +172,15 @@ class Tile {
 		}
 
 		return image;
+	}
+
+	clear() {
+		const self = this;
+
+		self.width = 0;
+		self.height = 0;
+		self.data = null;
+		self.attributes = 0;
 	}
 
 	writeTo(filePath, overwrite, palette, fileType, fileName, callback) {
@@ -293,13 +304,19 @@ class Tile {
 		}
 	}
 
+	clone() {
+		const self = this;
+
+		return new Tile(self.number, self.width, self.height, self.data, self.attributes);
+	}
+
 	static isTile(value) {
 		return value instanceof Tile;
 	}
 }
 
-Object.defineProperty(Art, "Tile", {
-	value: Tile,
+Object.defineProperty(Tile, "Attributes", {
+	value: TileAttributes,
 	enumerable: true
 });
 

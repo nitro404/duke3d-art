@@ -241,22 +241,65 @@ class Art {
 		return tileCount;
 	}
 
-	getTileByNumber(value) {
+	getTileByNumber(tileNumber) {
 		let self = this;
 
-		const formattedValue = utilities.parseInteger(value);
+		tileNumber = utilities.parseInteger(tileNumber);
 
-		if(isNaN(formattedValue)) {
-			throw new Error("Invalid tile number: " + value + ", expected valid integer value.");
+		if(isNaN(tileNumber)) {
+			throw new Error("Invalid tile number: " + tileNumber + ", expected valid integer value.");
 		}
 
-		const tileIndex = formattedValue - self.localTileStart;
+		const tileIndex = tileNumber - self.localTileStart;
 
-		if(tileNumber < 0 || tileNumber >= self.tiles.length) {
-			throw new Error("Tile number: " + value + " is out of range, expected integer number between " + self.localTileStart + " and " + self.localTileEnd + ", inclusively.");
+		if(tileIndex < 0 || tileIndex >= self.tiles.length) {
+			throw new Error("Tile number " + tileNumber + " is out of range, expected integer number between " + self.localTileStart + " and " + self.localTileEnd + ", inclusively.");
 		}
 
 		return self.tiles[tileIndex];
+	}
+
+	replaceTile(tile, tileNumber) {
+		const self = this;
+
+		if(!Art.Tile.isTile(tile)) {
+			throw new Error("Cannot replace tile with invalid value!");
+		}
+
+		tileNumber = utilities.parseInteger(tileNumber);
+
+		if(isNaN(tileNumber)) {
+			tileNumber = tile.number;
+		}
+
+		const tileIndex = tileNumber - self.localTileStart;
+
+		if(tileIndex < 0 || tileIndex >= self.tiles.length) {
+			throw new Error(`Cannot replace tile #${tileNumber}, number must be within range of ${self.localTileStart} and ${self.localTileEnd}`);
+		}
+
+		const newTile = tile.clone();
+		newTile.number = tileNumber;
+
+		self.tiles[tileIndex] = newTile;
+	}
+
+	clearTile(tileNumber) {
+		const self = this;
+
+		tileNumber = utilities.parseInteger(tileNumber);
+
+		if(isNaN(tileNumber)) {
+			throw new Error("Invalid tile number: " + tileNumber + ", expected valid integer value.");
+		}
+
+		const tileIndex = tileNumber - self.localTileStart;
+
+		if(tileIndex < 0 || tileIndex >= self.tiles.length) {
+			throw new Error("Tile number " + tileNumber + " is out of range, expected integer number between " + self.localTileStart + " and " + self.localTileEnd + ", inclusively.");
+		}
+
+		self.tiles[tileIndex].clear();
 	}
 
 	getTiles(includeEmpty) {
@@ -303,6 +346,43 @@ class Art {
 		}
 
 		return tiles;
+	}
+
+	compareTo(artFile) {
+		const self = this;
+
+		if(!Art.isArt(artFile)) {
+			throw new Error("Cannot compare to invalid art file!");
+		}
+
+		const tileComparison = {
+			new: [],
+			modified: [],
+			removed: [],
+			attributesChanged: []
+		};
+
+		for(let i = 0; i < self.tiles.length; i++) {
+			const tileA = self.tiles[i];
+			const tileB = artFile.getTileByNumber(tileA.number);
+			const tileAEmpty = tileA.isEmpty();
+			const tileBEmpty = tileB.isEmpty();
+
+			if(tileAEmpty && !tileBEmpty) {
+				tileComparison.new.push(tileB);
+			}
+			else if(!tileAEmpty && tileBEmpty) {
+				tileComparison.removed.push(tileA);
+			}
+			else if(!tileA.data.equals(tileB.data)) {
+				tileComparison.modified.push(tileB);
+			}
+			else if(!tileA.attributes.equals(tileB.attributes)) {
+				tileComparison.attributesChanged.push(tileB);
+			}
+		}
+
+		return tileComparison;
 	}
 
 	getMetadata() {
@@ -750,6 +830,16 @@ class Art {
 		fs.writeFileSync(filePath, self.serialize());
 
 		return filePath;
+	}
+
+	clone() {
+		const self = this;
+
+		return new Art(self.legacyTileCount, self.localTileStart, self.localTileEnd, self.tiles.map(function(tile) { return tile.clone(); }), self.filePath);
+	}
+
+	static isArt(value) {
+		return value instanceof Art;
 	}
 }
 
