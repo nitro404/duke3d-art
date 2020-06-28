@@ -88,11 +88,11 @@ class Tile {
 				return _properties.attributes;
 			},
 			set(value) {
-				if(Tile.Attributes.isTileAttributes(attributes)) {
-					_properties.attributes = attributes.clone();
+				if(Tile.Attributes.isTileAttributes(value)) {
+					_properties.attributes = value.clone();
 				}
-				else if(Number.isInteger(attributes)) {
-					_properties.attributes = Tile.Attributes.unpack(attributes);
+				else if(Number.isInteger(value)) {
+					_properties.attributes = Tile.Attributes.unpack(value);
 				}
 				else {
 					throw new TypeError("Invalid attributes value, expected integer or instance of TileAttribute.");

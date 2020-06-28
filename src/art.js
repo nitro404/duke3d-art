@@ -368,17 +368,17 @@ class Art {
 			const tileAEmpty = tileA.isEmpty();
 			const tileBEmpty = tileB.isEmpty();
 
-			if(tileAEmpty && !tileBEmpty) {
-				tileComparison.new.push(tileB);
+			if(!tileAEmpty && tileBEmpty) {
+				tileComparison.new.push(tileA);
 			}
-			else if(!tileAEmpty && tileBEmpty) {
-				tileComparison.removed.push(tileA);
+			else if(tileAEmpty && !tileBEmpty) {
+				tileComparison.removed.push(tileB);
 			}
 			else if(!tileA.data.equals(tileB.data)) {
-				tileComparison.modified.push(tileB);
+				tileComparison.modified.push(tileA);
 			}
 			else if(!tileA.attributes.equals(tileB.attributes)) {
-				tileComparison.attributesChanged.push(tileB);
+				tileComparison.attributesChanged.push(tileA);
 			}
 		}
 
@@ -697,7 +697,7 @@ class Art {
 		}
 
 		if(version !== Art.Version) {
-			throw new Error("Unsupported ART file version: " + newValue + ", only version " + Art.Version + " is supported.");
+			throw new Error("Unsupported ART file version: " + version + ", only version " + Art.Version + " is supported.");
 		}
 
 		const legacyTileCount = artByteBuffer.readInt32();
