@@ -193,11 +193,6 @@ class TileAttribute {
 	}
 }
 
-Object.defineProperty(TileAttributes, "Attribute", {
-	value: TileAttribute,
-	enumerable: true
-});
-
 Object.defineProperty(TileAttribute, "XOffset", {
 	value: new TileAttribute("X Offset", "XOffset", "xOffset", 8, true, 12),
 	enumerable: true

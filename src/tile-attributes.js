@@ -2,6 +2,7 @@
 
 const utilities = require("extra-utilities");
 const Tile = require("./tile.js");
+const TileAttribute = require("./tile-attribute.js");
 
 class TileAttributes {
 	constructor(xOffset, yOffset, numberOfFrames, animationType, animationSpeed, extra) {
@@ -153,5 +154,10 @@ class TileAttributes {
 		return value instanceof TileAttributes;
 	}
 }
+
+Object.defineProperty(TileAttributes, "Attribute", {
+	value: TileAttribute,
+	enumerable: true
+});
 
 module.exports = TileAttributes;
