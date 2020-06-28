@@ -182,7 +182,7 @@ class Art {
 			formattedTileStartOffset = 0;
 		}
 
-		const formattedNumberOfTiles = utilities.parseInteger(numberOfTiles);
+		let formattedNumberOfTiles = utilities.parseInteger(numberOfTiles);
 
 		if(isNaN(formattedNumberOfTiles) || formattedNumberOfTiles < 0) {
 			formattedNumberOfTiles = Art.DefaultNumberOfTiles;
