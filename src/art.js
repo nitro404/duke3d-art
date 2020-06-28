@@ -175,7 +175,7 @@ class Art {
 		return artSubclassPrototype instanceof Art;
 	}
 
-	create(tileStartOffset, numberOfTiles) {
+	static create(tileStartOffset, numberOfTiles) {
 		const formattedTileStartOffset = utilities.parseInteger(tileStartOffset);
 
 		if(isNaN(formattedTileStartOffset) || formattedTileStartOffset < 0) {
