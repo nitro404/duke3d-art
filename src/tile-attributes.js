@@ -54,15 +54,11 @@ class TileAttributes {
 		let self = this;
 
 		return {
-			offset: {
-				x: self.xOffset,
-				y: self.yOffset
-			},
+			xOffset: self.xOffset,
+			yOffset: self.yOffset,
 			numberOfFrames: self.numberOfFrames,
-			animation: {
-				type: self.getAnimationType().name,
-				speed: self.animationSpeed
-			},
+			animationType: self.getAnimationType().name,
+			animationSpeed: self.animationSpeed,
 			extra: self.extra
 		};
 	}
@@ -114,7 +110,7 @@ class TileAttributes {
 			   self.yOffset === value.yOffset &&
 			   self.numberOfFrames === value.numberOfFrames &&
 			   self.animationType === value.animationType &&
-			   self.animationSpeed=== value.animationSpeed;
+			   self.animationSpeed === value.animationSpeed;
 	}
 
 	toString() {
