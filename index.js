@@ -1,8 +1,5 @@
 "use strict";
 
-// TODO: temp:
-const Palette = require("../Duke3D Palette/index.js");
-
 const Art = require("./src/art.js");
 const Tile = require("./src/tile.js");
 const TileFileType = require("./src/tile-file-type.js");
