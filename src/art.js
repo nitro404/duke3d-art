@@ -759,6 +759,10 @@ class Art {
 			artByteBuffer.skip(numberOfPixels);
 		}
 
+		if(artByteBuffer.remaining() !== 0) {
+			console.warn("Additional " + artByteBuffer.remaining() + " bytes found at the end of the art file.");
+		}
+
 		let tiles = [];
 
 		for(let i = 0; i < numberOfTiles; i++) {
