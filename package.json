@@ -1,8 +1,8 @@
 {
   "name": "duke3d-art",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A module for reading, writing, interacting with and manipulating Duke Nukem 3D Tiles.ART files.",
-  "main": "src/art.js",
+  "main": "index.js",
   "scripts": {
     "build": "gulp build",
     "lint": "gulp lint",
