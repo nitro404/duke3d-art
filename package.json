@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/nitro404/duke3d-art#readme",
   "dependencies": {
-    "async": "^2.6.3",
+    "async": "^3.2.2",
     "bytebuffer": "^5.0.1",
     "colour-rgba": "^1.0.4",
     "duke3d-palette": "^0.0.5",
